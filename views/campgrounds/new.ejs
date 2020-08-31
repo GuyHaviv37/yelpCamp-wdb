@@ -1,0 +1,31 @@
+<%- include("../partials/header") %> 
+
+<div class="container text-center">
+    <div class="topContainer">
+        <h1>Add a New campground</h1>
+        <div class="yelpcamp-form" >
+            <form action="/campgrounds" method="POST"   >
+                <div class="form-group">
+                    <input class="form-control" id="campNameInput" type="text" name="camp[name]" placeholder="Campground Name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="camp[image]" placeholder="Image url">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="number" min="0.00" step="0.01"
+                    name="camp[price]" placeholder="Price per Night (in USD)">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text"
+                    name="camp[description]" placeholder="Description about the camp">
+                </div>
+                <hr class="my-4">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block">SUBMIT</button>
+                </div>
+            </form>
+            <a href="/campgrounds">Go back</a>
+        </div>
+    </div>
+</div>
+<%- include("../partials/footer") %> 

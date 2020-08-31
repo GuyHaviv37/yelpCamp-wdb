@@ -1,0 +1,47 @@
+.topContainer{
+    margin-top : 20px;
+}
+.deleteForm{
+    display:inline;
+}
+.uiComment{
+    float : right;
+    margin : 2px 
+}
+.yelpcamp-form{
+    width:30%;
+    margin : 30px auto;
+}
+#deleteForm{
+    display: inline;
+}
+#commentsWell{
+    margin-top: 15px;
+    margin-bottom : 20px;
+}
+.commentBox{
+    border-bottom : 1px solid rgba(0,0,0,.125);
+}
+.moreInfo{
+    font-size : 0.8em;
+    font-weight: 400;
+}
+
+
+/* #searchBox{
+    display : grid;
+    grid-template-columns: 1fr 1fr;
+    width : 50%;
+}
+.searchForm{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width : 30%;
+}
+#clearBox{
+    float:left;
+    margin-left : 2px;
+}
+.searchForm  input{
+    margin : auto 2px;
+} */

@@ -1,0 +1,135 @@
+<%- include("../partials/header") %>
+
+<div class="container topContainer">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- <p class="lead">YelpCamp</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div> -->
+            <div class="card">
+                <div class="card-header">
+                    More Information
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Info 1</li>
+                    <li class="list-group-item">Info 2</li>
+                    <li class="list-group-item">Info 3</li>
+                </ul>
+            </div>
+            <!-- map -->
+        </div>
+        <!-- Main -->
+        <div class="col-md-9">
+            <div class="card">
+                <img class="card-img-top img-responsive" src="<%= camp.image %>" alt="">
+                <div class="card-body">
+                    <h4 class="float-right"><%= camp.price %>$/Night</h4>
+                    <h4><a href="#"><%= camp.name %></a></h4>
+                    <p class="card-text"><%= camp.description %> </p>
+                    <p>
+                        <em> Submitted By : <%= camp.author.username %> , <%= moment(camp.createdAt).fromNow() %> </em>
+                        <strong><%= moment('2020-08-11T19:00:00-0400').isBefore(Date.now())%> </strong>
+                    </p>
+                    <!-- Like Button -->
+                    <div id="likeBox" class="mb-1">
+                        <form action="/campgrounds/<%= camp._id %>/like" method="POST">
+                            <% if (currentUser && camp.likes.some(function(like){ %>
+                                <% return like.equals(currentUser._id) %>
+                            <% })) { %>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-primary">👍 Liked 
+                                    <span class="badge badge-light"><%= camp.likes.length %></span></button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#likesModal">
+                                    More Info...
+                                </button>
+                            </div>
+                            <% } else { %>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-primary">👍 Like 
+                                    <span class="badge badge-light"><%= camp.likes.length %></span></button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#likesModal">
+                                    More Info...
+                                </button>
+                            </div>
+                            <% } %>
+                        </form>
+                    </div>
+                    <!-- Edit / Delete options -->
+                    <% if (currentUser && (camp.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %>
+                    <hr>
+                    <a class="btn btn-warning" href="/campgrounds/<%= camp._id %>/edit">Edit</a>
+                    <form class="deleteForm" action="/campgrounds/<%= camp._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <% } %>
+                </div>
+            </div>
+            <div id="commentsWell" class="card">
+                <div class="card-header">
+                    <h4 class="card-title" style="display:inline">Comments <span class="moreInfo">(
+                            <%= camp.comments.length %> )</span></h4>
+                    <div class="text-right float-right" style="display:inline">
+                        <a class="btn btn-success" href="/campgrounds/<%= camp._id %>/comments/new">Add Comment</a>
+                    </div>
+                </div>
+                <% camp.comments.forEach(comment => { %>
+                <div class="card-body commentBox">
+                    <h5 class="card-title"><%= comment.author.username  %> <span
+                            class="moreInfo"><em><%= moment(comment.createdAt).fromNow() %></em></span></h5>
+                    <div class="card-text">
+                        <%= comment.text %>
+                        <% if (currentUser && (comment.author.id.equals(currentUser._id)|| currentUser.isAdmin)) { %>
+                        <form class="deleteForm"
+                            action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>?_method=DELETE"
+                            method="POST">
+                            <button class="uiComment btn btn-sm btn-danger ">Delete</button>
+                        </form>
+                        <a class="uiComment btn btn-sm btn-warning"
+                            href="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>/edit ">Edit</a>
+                        <% } %>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="likesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+            <% if (camp.likes.length > 1) { %>
+                <%= camp.likes.length %> Likes for <%= camp.name %>  
+            <% } else if (camp.likes.length === 1) { %>
+                <%= camp.likes.length %> Like for <%= camp.name %>
+            <% } else { %>
+                No Likes for <%= camp.name %>
+            <% } %> 
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+            <tbody>
+            <% camp.likes.forEach(function(like) { %>
+                <tr>
+                    <td>😺 <%= like.username %></td>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include("../partials/footer") %>

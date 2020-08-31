@@ -1,0 +1,22 @@
+<%- include("../partials/header") %> 
+
+<div class="container text-center">
+    <div class="topContainer">
+        <h1>Forgot password ?</h1>
+        <div class="yelpcamp-form">
+            <form action="/forgot" method="POST">
+                <p>Please enter your email address and we'll help you reset your password</p>
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="E-mail Address">
+                </div>
+                <hr>
+                <div class="form-group">
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<%- include("../partials/footer") %> 
